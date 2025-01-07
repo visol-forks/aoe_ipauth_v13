@@ -9,11 +9,10 @@
     "issues": "https://github.com/AOEpeople/aoe_ipauth/issues"
   },
   "require": {
-    "typo3/cms-core": "^11.5"
+    "typo3/cms-core": "^12"
   },
   "require-dev": {
-    "nimut/testing-framework": "^5.0",
-    "nimut/typo3-complete": "^9.5"
+    "typo3/testing-framework": "^8.0"
   },
   "authors": [
     {
@@ -34,7 +33,11 @@
   },
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
   },
   "scripts": {
     "post-autoload-dump": [
