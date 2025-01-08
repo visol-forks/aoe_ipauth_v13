@@ -68,11 +68,10 @@ class Authentication extends AbstractAuthenticationService
         }
 
         if (!isset($GLOBALS['TCA'][FeEntityService::TABLE_USER])) {
+            // @extensionScannerIgnoreLine
             if (empty($GLOBALS['TSFE']->sys_page)) {
+                // @extensionScannerIgnoreLine
                 $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-            }
-            if (version_compare(GeneralUtility::makeInstance(Typo3Version::class)->getVersion(), '7.0.0', '<')) {
-                $GLOBALS['TSFE']->getCompressedTCarray();
             }
         }
     }

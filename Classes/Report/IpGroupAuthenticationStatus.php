@@ -24,8 +24,9 @@ namespace AOE\AoeIpauth\Report;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Reports\StatusProviderInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use AOE\AoeIpauth\Domain\Service\FeEntityService;
 use TYPO3\CMS\Reports\Status;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -40,11 +41,6 @@ class IpGroupAuthenticationStatus implements StatusProviderInterface
 {
 
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * @var string
      */
     protected $myIp;
@@ -53,13 +49,9 @@ class IpGroupAuthenticationStatus implements StatusProviderInterface
      *
      * @see typo3/sysext/reports/interfaces/tx_reports_StatusProvider::getStatus()
      */
-    public function getStatus()
+    public function getStatus(): array
     {
         $reports = array();
-
-        // create object manager
-        $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-        $this->objectManager = clone $objectManager;
 
         $this->myIp = GeneralUtility::getIndpEnv('REMOTE_ADDR');
 
@@ -77,20 +69,22 @@ class IpGroupAuthenticationStatus implements StatusProviderInterface
     protected function analyseUserGroups(&$reports)
     {
         /** @var FeEntityService $service */
-        $service = $this->objectManager->get('AOE\\AoeIpauth\\Domain\\Service\\FeEntityService');
+        $service = GeneralUtility::makeInstance(FeEntityService::class);
 
         $userGroups = $service->findAllGroupsWithIpAuthentication();
 
         if (empty($userGroups)) {
             // Message that no user group has IP authentication
-            $reports[] = $this->objectManager->get(
-                'TYPO3\\CMS\\Reports\\Status',
+            /** @var Status $status */
+            $status = GeneralUtility::makeInstance(
+                Status::class,
                 'IP Usergroup Authentication',
                 'No user groups with IP authentication found',
-                'No user groups were found anywhere that are active and have an automatic IP authentication enabled.' .
-                    'Your current IP is: <strong>' . $this->myIp . '</strong>',
-                Status::INFO
+                'No user groups were found anywhere that are active and have an automatic IP authentication enabled.'
+                . 'Your current IP is: <strong>' . $this->myIp . '</strong>',
+                ContextualFeedbackSeverity::INFO
             );
+            $reports[] = $status;
         } else {
             $thisUrl = urlencode(GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'));
 
@@ -118,12 +112,20 @@ class IpGroupAuthenticationStatus implements StatusProviderInterface
 
             $userGroupInfo .= '<br /><br />Your current IP is: <strong>' . $this->myIp . '</strong>';
 
-            $reports[] = $this->objectManager->get('TYPO3\\CMS\\Reports\\Status',
+            /** @var Status $status */
+            $status = GeneralUtility::makeInstance(
+                Status::class,
                 'IP Usergroup Authentication',
-                'Some groups with automatic IP authentication were found.',
+                'Some user groups with automatic IP authentication were found.',
                 $userGroupInfo,
-                Status::OK
+                ContextualFeedbackSeverity::OK
             );
+            $reports[] = $status;
         }
+    }
+
+    public function getLabel(): string
+    {
+        return 'IpGroupAuthenticationStatus';
     }
 }

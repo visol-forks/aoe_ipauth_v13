@@ -57,7 +57,7 @@ class FeEntityService implements SingletonInterface
      * @param string $ip
      * @return array
      */
-    public function findAllGroupsAuthenticatedByIp($ip)
+    public function findAllGroupsAuthenticatedByIp(string $ip): array
     {
         $groups = $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_GROUP);
         return $groups;
@@ -69,7 +69,7 @@ class FeEntityService implements SingletonInterface
      * @param string $ip
      * @return array
      */
-    public function findAllUsersAuthenticatedByIp($ip)
+    public function findAllUsersAuthenticatedByIp(string $ip): array
     {
         $groups = $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_USER);
         return $groups;
@@ -81,7 +81,7 @@ class FeEntityService implements SingletonInterface
      *
      * @return array
      */
-    public function findAllGroupsWithIpAuthentication()
+    public function findAllGroupsWithIpAuthentication(): array
     {
         $groups = $this->findEntitiesWithIpAuthentication(self::TABLE_GROUP);
         return $groups;
@@ -93,7 +93,7 @@ class FeEntityService implements SingletonInterface
      *
      * @return array
      */
-    public function findAllUsersWithIpAuthentication()
+    public function findAllUsersWithIpAuthentication(): array
     {
         $users = $this->findEntitiesWithIpAuthentication(self::TABLE_USER);
         return $users;
@@ -106,7 +106,7 @@ class FeEntityService implements SingletonInterface
      * @param string $table
      * @return array
      */
-    protected function findEntitiesAuthenticatedByIp($ip, $table)
+    protected function findEntitiesAuthenticatedByIp($ip, $table): array
     {
         $authenticatedEntities = array();
         $entities = $this->findEntitiesWithIpAuthentication($table);
@@ -141,7 +141,7 @@ class FeEntityService implements SingletonInterface
      * @return array
      * @throws \RuntimeException
      */
-    protected function findEntitiesWithIpAuthentication($table)
+    protected function findEntitiesWithIpAuthentication($table): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $queryBuilder->getRestrictions()->removeAll();
@@ -185,7 +185,7 @@ class FeEntityService implements SingletonInterface
     /**
      * @return IpService
      */
-    protected function getIpService()
+    protected function getIpService(): IpService
     {
         if (null === $this->ipService) {
             $this->ipService = GeneralUtility::makeInstance('AOE\\AoeIpauth\\Domain\\Service\\IpService');
@@ -196,7 +196,7 @@ class FeEntityService implements SingletonInterface
     /**
      * @return IpMatchingService
      */
-    protected function getIpMatchingService()
+    protected function getIpMatchingService(): IpMatchingService
     {
         if (null === $this->ipMatchingService) {
             $this->ipMatchingService = GeneralUtility::makeInstance('AOE\\AoeIpauth\\Service\\IpMatchingService');

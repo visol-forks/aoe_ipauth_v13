@@ -45,7 +45,7 @@ class IpService implements  SingletonInterface
      * @param int $uid fe_users uid
      * @return array
      */
-    public function findIpsByFeUserId($uid)
+    public function findIpsByFeUserId(int $uid): array
     {
         return $this->findIpsByField('fe_user', $uid);
     }
@@ -56,7 +56,7 @@ class IpService implements  SingletonInterface
      * @param int $uid fe_groups uid
      * @return array
      */
-    public function findIpsByFeGroupId($uid)
+    public function findIpsByFeGroupId(int $uid): array
     {
         return $this->findIpsByField('fe_group', $uid);
     }
@@ -68,7 +68,7 @@ class IpService implements  SingletonInterface
      * @param int $value
      * @return array
      */
-    protected function findIpsByField($field, $value)
+    protected function findIpsByField(string $field, int $value): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()->removeAll();
@@ -77,8 +77,8 @@ class IpService implements  SingletonInterface
             ->where(
                 $queryBuilder->expr()->eq($field, (int)$value . ' ' . EnableFieldsUtility::enableFields(self::TABLE))
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         if (empty($ips)) {
             return array();

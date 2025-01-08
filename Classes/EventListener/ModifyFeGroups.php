@@ -13,6 +13,7 @@ class ModifyFeGroups
     public function __invoke(ModifyResolvedFrontendGroupsEvent $event): void
     {
         $ip = GeneralUtility::getIndpEnv('REMOTE_ADDR');
+        /** @var FeEntityService $feEntityService */
         $feEntityService = GeneralUtility::makeInstance(FeEntityService::class);
         $groups = $feEntityService->findAllGroupsAuthenticatedByIp($ip);
         if (!empty($groups)) {

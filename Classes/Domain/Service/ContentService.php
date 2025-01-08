@@ -49,7 +49,7 @@ class ContentService implements SingletonInterface
      * @param int $languageUid
      * @return bool
      */
-    public function isPageUserCustomized($uid, $languageUid)
+    public function isPageUserCustomized(int $uid, int $languageUid): bool
     {
         $rows = $this->findUserCustomizedContentByPageId($uid, $languageUid);
         $isCustomizedByContent = (0 < count($rows));
@@ -65,7 +65,7 @@ class ContentService implements SingletonInterface
      * @param int $languageUid
      * @return bool
      */
-    public function isPageBareUserCustomized($uid, $languageUid)
+    public function isPageBareUserCustomized(int $uid, $languageUid): bool
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::PAGES_TABLE);
         $queryBuilder->getRestrictions()->removeAll();
@@ -75,8 +75,8 @@ class ContentService implements SingletonInterface
                 $queryBuilder->expr()->neq('fe_group', 0),
                 $queryBuilder->expr()->eq('uid', (int)$uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         $isPageCustomized = (count($pages) > 0);
         return $isPageCustomized;
@@ -93,7 +93,7 @@ class ContentService implements SingletonInterface
      * @param int $languageUid
      * @return array
      */
-    public function findUserCustomizedContentByPageId($uid, $languageUid)
+    public function findUserCustomizedContentByPageId(int $uid, int $languageUid): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::CONTENT_TABLE);
         $queryBuilder->getRestrictions()->removeAll();
@@ -104,8 +104,8 @@ class ContentService implements SingletonInterface
                 $queryBuilder->expr()->eq('sys_language_uid', (int)$languageUid),
                 $queryBuilder->expr()->eq('pid', (int)$uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
 
         return $ttContent;
