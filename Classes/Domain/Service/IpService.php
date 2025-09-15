@@ -43,7 +43,6 @@ class IpService implements  SingletonInterface
      * Returns all ip domain model records that belong to a given fe_user uid
      *
      * @param int $uid fe_users uid
-     * @return array
      */
     public function findIpsByFeUserId(int $uid): array
     {
@@ -54,7 +53,6 @@ class IpService implements  SingletonInterface
      * Returns all ip domain model records that belong to a given fe_groups uid
      *
      * @param int $uid fe_groups uid
-     * @return array
      */
     public function findIpsByFeGroupId(int $uid): array
     {
@@ -63,10 +61,6 @@ class IpService implements  SingletonInterface
 
     /**
      * Finds IPs from the table by a given field and field value
-     *
-     * @param string $field
-     * @param int $value
-     * @return array
      */
     protected function findIpsByField(string $field, int $value): array
     {
@@ -75,7 +69,7 @@ class IpService implements  SingletonInterface
         $ips = $queryBuilder->select('ip')
             ->from(self::TABLE)
             ->where(
-                $queryBuilder->expr()->eq($field, (int)$value . ' ' . EnableFieldsUtility::enableFields(self::TABLE))
+                $queryBuilder->expr()->eq($field, $value . ' ' . EnableFieldsUtility::enableFields(self::TABLE))
             )
             ->executeQuery()
             ->fetchAllAssociative();

@@ -43,17 +43,17 @@ class Authentication extends AbstractAuthenticationService
     /**
      * @var IpMatchingService
      */
-    protected $ipMatchingService = null;
+    protected $ipMatchingService;
 
     /**
      * @var FeEntityService
      */
-    protected $feEntityService = null;
+    protected $feEntityService;
 
     /**
      * @var IpService
      */
-    protected $ipService = null;
+    protected $ipService;
 
     /**
      * Makes sure the TCA is readable, necessary for enableFields to work
@@ -67,12 +67,10 @@ class Authentication extends AbstractAuthenticationService
             return;
         }
 
-        if (!isset($GLOBALS['TCA'][FeEntityService::TABLE_USER])) {
+        // @extensionScannerIgnoreLine
+        if (!isset($GLOBALS['TCA'][FeEntityService::TABLE_USER]) && empty($GLOBALS['TSFE']->sys_page)) {
             // @extensionScannerIgnoreLine
-            if (empty($GLOBALS['TSFE']->sys_page)) {
-                // @extensionScannerIgnoreLine
-                $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-            }
+            $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(PageRepository::class);
         }
     }
 
@@ -95,9 +93,7 @@ class Authentication extends AbstractAuthenticationService
         if (empty($ipAuthenticatedUsers)) {
             return false;
         }
-
-        $user = array_pop($ipAuthenticatedUsers);
-        return $user;
+        return array_pop($ipAuthenticatedUsers);
     }
 
     /**
@@ -174,8 +170,7 @@ class Authentication extends AbstractAuthenticationService
      */
     protected function findAllUsersByIpAuthentication($ip)
     {
-        $users = $this->getFeEntityService()->findAllUsersAuthenticatedByIp($ip);
-        return $users;
+        return $this->getFeEntityService()->findAllUsersAuthenticatedByIp($ip);
     }
 
     /**

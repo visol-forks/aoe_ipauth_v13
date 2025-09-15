@@ -50,7 +50,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * SetUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->testExtensionsToLoad = array(
             'typo3conf/ext/aoe_ipauth',
@@ -67,7 +67,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -80,7 +80,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function isPageUserCustomizedWorks()
+    public function isPageUserCustomizedWorks(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 0;
@@ -101,7 +101,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function isPageUserCustomizedWorksForOverlays()
+    public function isPageUserCustomizedWorksForOverlays(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 2;
@@ -126,7 +126,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findUserCustomizedContentByPageIdWorks()
+    public function findUserCustomizedContentByPageIdWorks(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 0;
@@ -145,7 +145,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findUserCustomizedContentByPageIdWorksForOverlays()
+    public function findUserCustomizedContentByPageIdWorksForOverlays(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 2;
@@ -168,7 +168,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function isPageBareUserCustomizedWorks()
+    public function isPageBareUserCustomizedWorks(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 0;
@@ -186,7 +186,7 @@ class ContentServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function isPageBareUserCustomizedWorksForOverlays()
+    public function isPageBareUserCustomizedWorksForOverlays(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTtContent.xml');
         $language = 2;

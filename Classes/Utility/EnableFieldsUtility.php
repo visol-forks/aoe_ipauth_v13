@@ -48,7 +48,7 @@ class EnableFieldsUtility
         );
 
         if (!isset($enableFields[$table])) {
-            throw new \InvalidArgumentException('Table: ' . $table . 'is not supported in this function');
+            throw new \InvalidArgumentException('Table: ' . $table . 'is not supported in this function', 8859188852);
         }
 
         return $enableFields[$table];

@@ -50,7 +50,7 @@ class IpServiceTest extends FunctionalTestCase
     /**
      *
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->testExtensionsToLoad = array(
             'typo3conf/ext/aoe_ipauth',
@@ -68,7 +68,7 @@ class IpServiceTest extends FunctionalTestCase
     /**
      *
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -81,7 +81,7 @@ class IpServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findIpsByFeGroupIdFindsCorrectIps()
+    public function findIpsByFeGroupIdFindsCorrectIps(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTxAoeIpauthDomainModelIp.xml');
 
@@ -98,7 +98,7 @@ class IpServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findIpsByFeUserIdFindsCorrectIps()
+    public function findIpsByFeUserIdFindsCorrectIps(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultTxAoeIpauthDomainModelIp.xml');
 

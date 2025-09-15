@@ -49,8 +49,7 @@ class IpMatchingService implements SingletonInterface
      */
     public function isValidIp($possibleIp)
     {
-        $isValid = GeneralUtility::validIP($possibleIp);
-        return $isValid;
+        return GeneralUtility::validIP($possibleIp);
     }
 
     /**
@@ -69,9 +68,7 @@ class IpMatchingService implements SingletonInterface
         }
         // Replace wildcards and simply validate the IP
         $normalizedPossibleIp = str_replace('*', '50', $possibleIp);
-
-        $isValid = GeneralUtility::validIPv4($normalizedPossibleIp);
-        return $isValid;
+        return GeneralUtility::validIPv4($normalizedPossibleIp);
     }
 
     /**
@@ -89,8 +86,7 @@ class IpMatchingService implements SingletonInterface
         }
         $lower = $ips[0];
         $upper = $ips[1];
-        $isValid = ($this->isValidIp($lower) && $this->isValidIp($upper));
-        return $isValid;
+        return $this->isValidIp($lower) && $this->isValidIp($upper);
     }
 
     /**
@@ -135,10 +131,10 @@ class IpMatchingService implements SingletonInterface
             list($a, $b, $c, $d) = $x;
             $range = sprintf(
                 '%u.%u.%u.%u',
-                empty($a) ? '0' : $a,
-                empty($b) ?' 0' : $b,
-                empty($c) ? '0' : $c,
-                empty($d) ? '0' : $d
+                $a === '' || $a === '0' ? '0' : $a,
+                $b === '' || $b === '0' ?' 0' : $b,
+                $c === '' || $c === '0' ? '0' : $c,
+                $d === '' || $d === '0' ? '0' : $d
             );
             $rangeDec = ip2long($range);
             $ipDec = ip2long($givenIp);
@@ -147,7 +143,7 @@ class IpMatchingService implements SingletonInterface
             $wildcardDec = pow(2, (32 - $netmask)) - 1;
             $netmaskDec = ~ $wildcardDec;
 
-            $isAllowed = (($ipDec & $netmaskDec) == ($rangeDec & $netmaskDec));
+            $isAllowed = (($ipDec & $netmaskDec) === ($rangeDec & $netmaskDec));
         } else {
             // Wildcard or dash range. Both get matched very similarly.
             $dashRange = $givenWhitelist;

@@ -23,7 +23,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-defined('TYPO3') or die();
+defined('TYPO3') || die();
 
 $GLOBALS['TCA']['tx_aoeipauth_domain_model_ip'] = array(
     'ctrl' => array(
@@ -31,7 +31,6 @@ $GLOBALS['TCA']['tx_aoeipauth_domain_model_ip'] = array(
         'label' => 'description',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'versioning' => false,
         'versioningWS' => false,
@@ -41,8 +40,6 @@ $GLOBALS['TCA']['tx_aoeipauth_domain_model_ip'] = array(
             'endtime' => 'endtime',
         ),
         \TYPO3\CMS\Core\Utility\PathUtility::stripPathSitePrefix(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('aoe_ipauth')) . 'Resources/Public/Icons/tx_aoeipauth_domain_model_ip.png'
-    ),
-    'interface' => array(
     ),
     'types' => array(
         '1' => array('showitem' => 'hidden,--palette--;;1,ip,description'),
@@ -94,7 +91,8 @@ $GLOBALS['TCA']['tx_aoeipauth_domain_model_ip'] = array(
             'config' => array(
                 'type' => 'input',
                 'size' => 60,
-                'eval' => 'trim,required'
+                'eval' => 'trim',
+                'required' => true
             ),
         ),
         'description' => array(
@@ -103,7 +101,7 @@ $GLOBALS['TCA']['tx_aoeipauth_domain_model_ip'] = array(
             'config' => array(
                 'type' => 'input',
                 'size' => 120,
-                'eval' => 'required'
+                'required' => true
             ),
         ),
         'fe_user' => array(

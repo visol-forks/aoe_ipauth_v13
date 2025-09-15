@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3') or die();
+defined('TYPO3') || die();
 
 (function () {
     // Do not show the IP records in the listing

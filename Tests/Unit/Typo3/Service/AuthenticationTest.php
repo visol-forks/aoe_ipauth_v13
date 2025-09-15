@@ -44,7 +44,7 @@ class AuthenticationTest extends UnitTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->fixture = GeneralUtility::makeInstance('AOE\\AoeIpauth\\Typo3\\Service\\Authentication');
@@ -53,7 +53,7 @@ class AuthenticationTest extends UnitTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -118,7 +118,7 @@ class AuthenticationTest extends UnitTestCase
      * @test
      * @dataProvider getUserAuthenticatesUserProvider
      */
-    public function getUserAuthenticatesUser($ip, $ipAuthenticatedUsers, $finalUserArray)
+    public function getUserAuthenticatesUser($ip, $ipAuthenticatedUsers, $finalUserArray): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Typo3\\Service\\Authentication', array('findAllUsersByIpAuthentication'));
 
@@ -178,7 +178,7 @@ class AuthenticationTest extends UnitTestCase
      * @test
      * @dataProvider getGroupsAuthenticatesGroupsProvider
      */
-    public function getGroupsAuthenticatesGroups($ip, $ipAuthenticatedGroups, $finalGroupArray)
+    public function getGroupsAuthenticatesGroups($ip, $ipAuthenticatedGroups, $finalGroupArray): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Typo3\\Service\\Authentication', array('findAllGroupsByIpAuthentication'));
 
@@ -210,7 +210,7 @@ class AuthenticationTest extends UnitTestCase
     /**
      * @test
      */
-    public function authUserAuthenticatesIpWhenUserIpMatches()
+    public function authUserAuthenticatesIpWhenUserIpMatches(): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Typo3\\Service\\Authentication', array('doesCurrentUsersIpMatch'));
 
@@ -232,7 +232,7 @@ class AuthenticationTest extends UnitTestCase
     /**
      * @test
      */
-    public function authUserDoesNotAuthenticateWhenUserIpFails()
+    public function authUserDoesNotAuthenticateWhenUserIpFails(): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Typo3\\Service\\Authentication', array('doesCurrentUsersIpMatch'));
 

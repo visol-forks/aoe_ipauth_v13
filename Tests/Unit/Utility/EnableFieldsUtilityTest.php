@@ -41,7 +41,7 @@ class EnableFieldsUtilityTest extends UnitTestCase
      * @test
      * @dataProvider enableFieldsUtilityReturnsRespectedEnableFieldsForTableDataProvider
      */
-    public function enableFieldsUtilityReturnsRespectedEnableFieldsForTable($expected, $table)
+    public function enableFieldsUtilityReturnsRespectedEnableFieldsForTable($expected, $table): void
     {
         $this->assertSame($expected, EnableFieldsUtility::enableFields($table));
     }
@@ -78,7 +78,7 @@ class EnableFieldsUtilityTest extends UnitTestCase
      * @test
      * @expectedException InvalidArgumentException
      */
-    public function enableFieldsUtilityThrowsException()
+    public function enableFieldsUtilityThrowsException(): void
     {
         EnableFieldsUtility::enableFields('UnknownTable');
     }

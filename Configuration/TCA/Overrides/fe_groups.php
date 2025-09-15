@@ -23,7 +23,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-defined('TYPO3') or die();
+defined('TYPO3') || die();
 
 // Add IP Options to fe_groups table
 $tempColumns = array(
@@ -47,8 +47,7 @@ $tempColumns = array(
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(
     'fe_groups',
-    $tempColumns,
-    1
+    $tempColumns
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',

@@ -50,7 +50,7 @@ class FeEntityServiceTest extends FunctionalTestCase
     /**
      *
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->testExtensionsToLoad = array(
             'typo3conf/ext/aoe_ipauth',
@@ -67,7 +67,7 @@ class FeEntityServiceTest extends FunctionalTestCase
     /**
      *
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -80,7 +80,7 @@ class FeEntityServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllGroupsWithIpAuthenticationFindsCorrectFeGroups()
+    public function findAllGroupsWithIpAuthenticationFindsCorrectFeGroups(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultFeGroups.xml');
         $this->importDataSet($this->fixturePath . 'DbDefaultTxAoeIpauthDomainModelIp.xml');
@@ -104,7 +104,7 @@ class FeEntityServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllUsersWithIpAuthenticationFindsCorrectFeUsers()
+    public function findAllUsersWithIpAuthenticationFindsCorrectFeUsers(): void
     {
         $this->importDataSet($this->fixturePath . 'DbDefaultFeUsers.xml');
         $this->importDataSet($this->fixturePath . 'DbDefaultTxAoeIpauthDomainModelIp.xml');
@@ -260,7 +260,7 @@ class FeEntityServiceTest extends FunctionalTestCase
      * @test
      * @dataProvider findAllGroupsAuthenticatedByIpGetsCorrectGroupsProvider
      */
-    public function findAllGroupsAuthenticatedByIpGetsCorrectGroups($ip, $knownGroups, $finalGroupArray)
+    public function findAllGroupsAuthenticatedByIpGetsCorrectGroups($ip, $knownGroups, $finalGroupArray): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Domain\\Service\\FeEntityService', array('findEntitiesWithIpAuthentication'));
 
@@ -414,7 +414,7 @@ class FeEntityServiceTest extends FunctionalTestCase
      * @test
      * @dataProvider findAllUsersAuthenticatedByIpGetsCorrectUsersProvider
      */
-    public function findAllUsersAuthenticatedByIpGetsCorrectUsers($ip, $knownUsers, $finalUserArray)
+    public function findAllUsersAuthenticatedByIpGetsCorrectUsers($ip, $knownUsers, $finalUserArray): void
     {
         $stubbedFixture = $this->getAccessibleMock('AOE\\AoeIpauth\\Domain\\Service\\FeEntityService', array('findEntitiesWithIpAuthentication'));
 

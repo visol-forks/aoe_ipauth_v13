@@ -44,59 +44,45 @@ class FeEntityService implements SingletonInterface
     /**
      * @var IpService
      */
-    protected $ipService = null;
+    protected $ipService;
 
     /**
      * @var IpMatchingService
      */
-    protected $ipMatchingService = null;
+    protected $ipMatchingService;
 
     /**
      * Finds all groups that would be authenticated against a certain IP
-     *
-     * @param string $ip
-     * @return array
      */
     public function findAllGroupsAuthenticatedByIp(string $ip): array
     {
-        $groups = $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_GROUP);
-        return $groups;
+        return $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_GROUP);
     }
 
     /**
      * Finds all groups that would be authenticated against a certain IP
-     *
-     * @param string $ip
-     * @return array
      */
     public function findAllUsersAuthenticatedByIp(string $ip): array
     {
-        $groups = $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_USER);
-        return $groups;
+        return $this->findEntitiesAuthenticatedByIp($ip, self::TABLE_USER);
     }
 
     /**
      * Returns all fe_groups with ip authentication enabled
      * Convenience method for "findEntitiesWithIpAuthentication"
-     *
-     * @return array
      */
     public function findAllGroupsWithIpAuthentication(): array
     {
-        $groups = $this->findEntitiesWithIpAuthentication(self::TABLE_GROUP);
-        return $groups;
+        return $this->findEntitiesWithIpAuthentication(self::TABLE_GROUP);
     }
 
     /**
      * Returns all fe_users with ip authentication enabled
      * Convenience method for "findEntitiesWithIpAuthentication"
-     *
-     * @return array
      */
     public function findAllUsersWithIpAuthentication(): array
     {
-        $users = $this->findEntitiesWithIpAuthentication(self::TABLE_USER);
-        return $users;
+        return $this->findEntitiesWithIpAuthentication(self::TABLE_USER);
     }
 
     /**
@@ -104,14 +90,13 @@ class FeEntityService implements SingletonInterface
      *
      * @param string $ip
      * @param string $table
-     * @return array
      */
     protected function findEntitiesAuthenticatedByIp($ip, $table): array
     {
         $authenticatedEntities = array();
         $entities = $this->findEntitiesWithIpAuthentication($table);
 
-        if (empty($entities)) {
+        if ($entities === []) {
             return $authenticatedEntities;
         }
 
@@ -138,7 +123,6 @@ class FeEntityService implements SingletonInterface
      * Finds entities with IP authentication
      *
      * @param string $table
-     * @return array
      * @throws \RuntimeException
      */
     protected function findEntitiesWithIpAuthentication($table): array
@@ -146,12 +130,7 @@ class FeEntityService implements SingletonInterface
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $queryBuilder->getRestrictions()->removeAll();
         $entities = $queryBuilder->select('*')
-            ->from($table)
-            ->where(
-                $queryBuilder->expr()->gt('tx_aoeipauth_ip', '0' . EnableFieldsUtility::enableFields($table))
-            )
-            ->execute()
-            ->fetchAll();
+            ->from($table)->where($queryBuilder->expr()->gt('tx_aoeipauth_ip', '0' . EnableFieldsUtility::enableFields($table)))->executeQuery()->fetchAllAssociative();
 
         if (empty($entities)) {
             return array();
@@ -171,7 +150,7 @@ class FeEntityService implements SingletonInterface
             }
 
             // Skip groups that do not find a corresponding ip
-            if (empty($matchedIps)) {
+            if ($matchedIps === []) {
                 continue;
             }
             // Inject the matched ips to the group
@@ -182,9 +161,6 @@ class FeEntityService implements SingletonInterface
         return $finalEntities;
     }
 
-    /**
-     * @return IpService
-     */
     protected function getIpService(): IpService
     {
         if (null === $this->ipService) {
@@ -193,9 +169,6 @@ class FeEntityService implements SingletonInterface
         return $this->ipService;
     }
 
-    /**
-     * @return IpMatchingService
-     */
     protected function getIpMatchingService(): IpMatchingService
     {
         if (null === $this->ipMatchingService) {

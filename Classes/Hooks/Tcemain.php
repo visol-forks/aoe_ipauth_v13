@@ -49,9 +49,8 @@ class Tcemain
      * @param string $id
      * @param array $fieldArray
      * @param DataHandler $pObj
-     * @return void
      */
-    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$pObj)
+    public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$pObj): void
     {
         if (self::IP_TABLE != $table || empty($fieldArray) || !isset($fieldArray['ip'])) {
             return;
@@ -104,8 +103,6 @@ class Tcemain
     /**
      * Adds a simple flash message
      *
-     * @param string $message
-     * @param ContextualFeedbackSeverity $code
      * @return void
      */
     protected function addFlashMessage(string $message, ContextualFeedbackSeverity $code)

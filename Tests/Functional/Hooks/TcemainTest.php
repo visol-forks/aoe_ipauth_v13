@@ -44,7 +44,7 @@ class TcemainTest extends FunctionalTestCase
     /**
      *
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->testExtensionsToLoad = array(
             'typo3conf/ext/aoe_ipauth',
@@ -63,7 +63,7 @@ class TcemainTest extends FunctionalTestCase
     /**
      *
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -101,7 +101,7 @@ class TcemainTest extends FunctionalTestCase
      * @test
      * @dataProvider processDatamapPostProcessFieldArrayRejectsInvalidIpsProvider
      */
-    public function processDatamapPostProcessFieldArrayRejectsInvalidIps($ip)
+    public function processDatamapPostProcessFieldArrayRejectsInvalidIps($ip): void
     {
         $status = '';
         $table = Tcemain::IP_TABLE;
@@ -151,7 +151,7 @@ class TcemainTest extends FunctionalTestCase
      * @test
      * @dataProvider processDatamapPostProcessFieldArrayCorrectlySetsRangeTypeInFieldArrayProvider
      */
-    public function processDatamapPostProcessFieldArrayCorrectlySetsRangeTypeInFieldArray($ip, $expected)
+    public function processDatamapPostProcessFieldArrayCorrectlySetsRangeTypeInFieldArray($ip, $expected): void
     {
         $status = '';
         $table = Tcemain::IP_TABLE;

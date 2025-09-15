@@ -44,7 +44,7 @@ class IpMatchingServiceTest extends UnitTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->fixture = GeneralUtility::makeInstance('AOE\\AoeIpauth\\Service\\IpMatchingService');
@@ -53,7 +53,7 @@ class IpMatchingServiceTest extends UnitTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->fixture);
         parent::tearDown();
@@ -108,7 +108,7 @@ class IpMatchingServiceTest extends UnitTestCase
      * @test
      * @dataProvider isValidIpDeterminesIpValidityCorrectlyProvider
      */
-    public function isValidIpDeterminesIpValidityCorrectly($ip, $expected)
+    public function isValidIpDeterminesIpValidityCorrectly($ip, $expected): void
     {
         $this->assertSame($this->fixture->isValidIp($ip), $expected);
     }
@@ -159,7 +159,7 @@ class IpMatchingServiceTest extends UnitTestCase
      * @test
      * @dataProvider isValidWildcardIpDeterminesIpValidityCorrectlyProvider
      */
-    public function isValidWildcardIpDeterminesIpValidityCorrectly($ip, $expected)
+    public function isValidWildcardIpDeterminesIpValidityCorrectly($ip, $expected): void
     {
         $this->assertSame($this->fixture->isValidWildcardIp($ip), $expected);
     }
@@ -201,7 +201,7 @@ class IpMatchingServiceTest extends UnitTestCase
      * @test
      * @dataProvider isValidDashRangeDeterminesIpValidityCorrectlyProvider
      */
-    public function isValidDashRangeDeterminesIpValidityCorrectly($ip, $expected)
+    public function isValidDashRangeDeterminesIpValidityCorrectly($ip, $expected): void
     {
         $this->assertSame($this->fixture->isValidDashRange($ip), $expected);
     }
@@ -249,7 +249,7 @@ class IpMatchingServiceTest extends UnitTestCase
      * @test
      * @dataProvider isValidCidrRangeDeterminesIpValidityCorrectlyProvider
      */
-    public function isValidCidrRangeDeterminesIpValidityCorrectly($ip, $expected)
+    public function isValidCidrRangeDeterminesIpValidityCorrectly($ip, $expected): void
     {
         $this->assertSame($this->fixture->isValidCidrRange($ip), $expected);
     }
@@ -318,7 +318,7 @@ class IpMatchingServiceTest extends UnitTestCase
      * @test
      * @dataProvider isIpAllowedDeterminesIpValidityCorrectlyProvider
      */
-    public function isIpAllowedDeterminesIpValidityCorrectly($givenIp, $whitelist, $expected)
+    public function isIpAllowedDeterminesIpValidityCorrectly($givenIp, $whitelist, $expected): void
     {
         $this->assertSame($this->fixture->isIpAllowed($givenIp, $whitelist), $expected);
     }

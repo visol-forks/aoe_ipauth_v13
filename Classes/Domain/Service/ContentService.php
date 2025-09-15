@@ -44,10 +44,6 @@ class ContentService implements SingletonInterface
     /**
      * Returns true if the page has content elements
      * that depend on logged in users/user groups
-     *
-     * @param int $uid
-     * @param int $languageUid
-     * @return bool
      */
     public function isPageUserCustomized(int $uid, int $languageUid): bool
     {
@@ -61,9 +57,7 @@ class ContentService implements SingletonInterface
      * Checks if a page itself is user customized
      * No matter what the languageUid is, we only need to check the original page
      *
-     * @param int $uid
      * @param int $languageUid
-     * @return bool
      */
     public function isPageBareUserCustomized(int $uid, $languageUid): bool
     {
@@ -73,13 +67,11 @@ class ContentService implements SingletonInterface
             ->from(self::PAGES_TABLE)
             ->where(
                 $queryBuilder->expr()->neq('fe_group', 0),
-                $queryBuilder->expr()->eq('uid', (int)$uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
+                $queryBuilder->expr()->eq('uid', $uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
             )
             ->executeQuery()
             ->fetchAllAssociative();
-
-        $isPageCustomized = (count($pages) > 0);
-        return $isPageCustomized;
+        return count($pages) > 0;
     }
 
     /**
@@ -90,24 +82,21 @@ class ContentService implements SingletonInterface
      * (not actually linked to the page)
      *
      * @param int $uid fe_groups uid
-     * @param int $languageUid
-     * @return array
      */
     public function findUserCustomizedContentByPageId(int $uid, int $languageUid): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::CONTENT_TABLE);
         $queryBuilder->getRestrictions()->removeAll();
-        $ttContent = $queryBuilder->select('uid', 'pid')
+
+
+        return $queryBuilder->select('uid', 'pid')
             ->from(self::CONTENT_TABLE)
             ->where(
                 $queryBuilder->expr()->gt('fe_group', 0),
-                $queryBuilder->expr()->eq('sys_language_uid', (int)$languageUid),
-                $queryBuilder->expr()->eq('pid', (int)$uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
+                $queryBuilder->expr()->eq('sys_language_uid', $languageUid),
+                $queryBuilder->expr()->eq('pid', $uid . ' ' . EnableFieldsUtility::enableFields(self::CONTENT_TABLE))
             )
             ->executeQuery()
             ->fetchAllAssociative();
-
-
-        return $ttContent;
     }
 }
